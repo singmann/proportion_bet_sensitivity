@@ -152,3 +152,4 @@ ggplot(summary_sim, aes(x = diff, y = sig)) +
   labs(x = "Difference in proportion bet", 
        y = "Probability of 95%-CI excl. 0")
 
+ggsave("sensitivity.pdf", width = 5, height = 3.5)
