@@ -188,7 +188,8 @@ summary_sim <- sim_res %>%
             sig_pos = mean(exclude_0 & .mean > 0), 
             n = n(), 
             success = if_else(diff[1] == 0, sum(exclude_0), 
-                              sum(exclude_0 & .mean < 0))) 
+                              sum(exclude_0 & .mean < 0))) %>% 
+  mutate(sig = if_else(diff == 0, sig, sig_neg))
 theme_set(theme_bw(base_size = 14))
 library("binom")
 summary_sim <- summary_sim %>% 
@@ -205,6 +206,7 @@ ggplot(summary_sim, aes(x = diff, y = sig)) +
   coord_cartesian(ylim = c(0, 1)) +
   labs(x = "Difference in proportion bet", 
        y = "Probability of 95%-CI excl. 0") +
-  scale_x_continuous(breaks = seq(0, 0.1, 0.02))
+  scale_x_continuous(breaks = seq(0, 0.1, 0.02)) +
+  scale_y_continuous(breaks = seq(0, 1, 0.2))
 
 ggsave("sensitivity_2.pdf", width = 5, height = 3.5)
