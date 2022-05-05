@@ -177,8 +177,13 @@ for (i in seq_along(differences)) {
   sim_list[[i]] <- sim_out
   print(proc.time() - ptm)
 }
-
 sim_res <- bind_rows(sim_list)
+
+#### load simulation data ###
+sim_res <- map_dfr(list.files(pattern = "zoibr_sim_diff_.+_v3.rda"), ~{
+  load(.)
+  sim_out
+})
 
 summary_sim <- sim_res %>% 
   filter(parameter == "prop_bet") %>% 
